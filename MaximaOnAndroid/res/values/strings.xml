@@ -3,5 +3,6 @@
 
     <string name="hello">Hello World, MaximaOnAndroidActivity!</string>
     <string name="app_name">MaximaOnAndroid</string>
+    <string name="manual_act_title">MaximaOnAndroid -- Maxima Manual</string>
 
 </resources>

@@ -52,7 +52,6 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 	Semaphore sem = new Semaphore(1);
 	EditText _editText;
     WebView webview;
-    ScrollView scview;
     CommandExec maximaProccess;
     File internalDir;
     File externalDir;
@@ -77,12 +76,12 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 		  case R.id.quit:
 			  exitMOA();
 			  return true;
-		  case R.id.man:
-			  showManual("file://"+internalDir+"/additions/en/maxima.html");
+		  case R.id.manual_en:
+			  showManual("file://"+internalDir+"/additions/en/maxima.html", ManualActivity.ENGLISH_VERSION);
 			  return true;
-		  case R.id.manj:
-			  showManual("file://"+internalDir+"/additions/ja/maxima.html");
-			  return true;
+		  case R.id.manual_jap:
+		    showManual("file://"+internalDir+"/additions/ja/maxima.html", ManualActivity.JAPANESE_VERSION);
+		    return true;
 		  default:
 			   return super.onOptionsItemSelected(item);
 		  }
@@ -101,7 +100,6 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
         webview.getSettings().setJavaScriptEnabled(true); 
         webview.setWebViewClient(new WebViewClient() {}); 
         webview.getSettings().setBuiltInZoomControls(true);
-        scview = (ScrollView) findViewById(R.id.scrollView1);
         
         if (Build.VERSION.SDK_INT > 16) { // > JELLY_BEAN
         	maximaURL=newmaximaURL;
@@ -136,7 +134,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
        				startMaxima();
        			}
        		}).start();
-       	}   		
+       	}   	
     }
     
     
@@ -172,7 +170,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
     	try {
 			sem.acquire();
 		} catch (InterruptedException e1) {
-			// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+			// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 			e1.printStackTrace();
 		}
     	if ( ! ( new File( internalDir+"/maxima-"+mvers.versionString() ) ).exists() &&
@@ -187,7 +185,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
         try {
             maximaProccess.execCommand(list);
         } catch (Exception e) {
-            // —áŠOˆ—
+            // Â—Ã¡ÂŠOÂÂˆÂ—Â
         }
         maximaProccess.clearStringBuilder();
         sem.release();
@@ -204,11 +202,11 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 				Runnable viewtask = new Runnable() {
 					@Override
 					public void run() {
-						scview.fullScroll(ScrollView.FOCUS_DOWN);
+					  webview.pageDown(true);
 						Log.v("My Test","scroll!");
 					}
 				};
-				scview.post(viewtask);
+				webview.post(viewtask);
 			}
     	};
     	handler.postDelayed(task, 1000);
@@ -218,7 +216,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
    		try {
 			sem.acquire();
 		} catch (InterruptedException e1) {
-			// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+			// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 			e1.printStackTrace();
 		}
    		sem.release();
@@ -249,10 +247,10 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
    					return false;
    				}
 			} catch (IOException e) {
-				// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+				// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+				// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 				e.printStackTrace();
 			}
 
@@ -289,7 +287,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 		        try {
 		        	gnuplotcom.execCommand(list);
 		        } catch (Exception e) {
-		            // —áŠOˆ—
+		            // Â—Ã¡ÂŠOÂÂˆÂ—Â
 		        }
 		        if ((new File("/data/data/jp.yhonda/files/maxout.html")).exists()) {
 		        	showHTML("file:///data/data/jp.yhonda/files/maxout.html");
@@ -302,7 +300,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 		        try {
 		        	qepcadcom.execCommand(list);
 		        } catch (Exception e) {
-		            // —áŠOˆ—
+		            // Â—Ã¡ÂŠOÂÂˆÂ—Â
 		        }
 				
 			}
@@ -313,7 +311,7 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
    	}
    	
    	private boolean maxima_syntax_check(String cmd) {
-   		// ÅŒã‚ªƒZƒ~ƒRƒƒ“‚ ‚é‚¢‚Íƒ_ƒ‰[‚ÅI‚í‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+   		// ÂÃ…ÂŒÃ£Â‚ÂªÂƒZÂƒ~ÂƒRÂƒÂÂƒÂ“Â‚Â Â‚Ã©Â‚Â¢Â‚ÃÂƒ_ÂƒÂ‰Â[Â‚Ã…ÂIÂ‚Ã­Â‚ÃÂ‚Ã„Â‚Â¢Â‚Ã©Â‚Â©Âƒ`ÂƒFÂƒbÂƒN
    		if (!cmd.endsWith(";") && !cmd.endsWith("$")) return false;
    		if (cmd.endsWith(";;")) return false;
    		return true;
@@ -324,21 +322,21 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
    	}
    	
    	static private String substitute(String input, String pattern, String replacement) {
-   	    // ’uŠ·‘ÎÛ•¶š—ñ‚ª‘¶İ‚·‚éêŠ‚ğæ“¾
+   	    // Â’uÂŠÂ·Â‘ÃÂÃ›Â•Â¶ÂÂšÂ—Ã±Â‚ÂªÂ‘Â¶ÂÃÂ‚Â·Â‚Ã©ÂÃªÂÂŠÂ‚Ã°ÂÃ¦Â“Â¾
    	    int index = input.indexOf(pattern);
 
-   	    // ’uŠ·‘ÎÛ•¶š—ñ‚ª‘¶İ‚µ‚È‚¯‚ê‚ÎI—¹
+   	    // Â’uÂŠÂ·Â‘ÃÂÃ›Â•Â¶ÂÂšÂ—Ã±Â‚ÂªÂ‘Â¶ÂÃÂ‚ÂµÂ‚ÃˆÂ‚Â¯Â‚ÃªÂ‚ÃÂIÂ—Â¹
    	    if(index == -1) {
    	        return input;
    	    }
 
-   	    // ˆ—‚ğs‚¤‚½‚ß‚Ì StringBuffer
+   	    // ÂÂˆÂ—ÂÂ‚Ã°ÂsÂ‚Â¤Â‚Â½Â‚ÃŸÂ‚ÃŒ StringBuffer
    	    StringBuffer buffer = new StringBuffer();
 
    	    buffer.append(input.substring(0, index) + replacement);
 
    	    if(index + pattern.length() < input.length()) {
-   	        // c‚è‚Ì•¶š—ñ‚ğÄ‹A“I‚É’uŠ·
+   	        // ÂcÂ‚Ã¨Â‚ÃŒÂ•Â¶ÂÂšÂ—Ã±Â‚Ã°ÂÃ„Â‹AÂ“IÂ‚Ã‰Â’uÂŠÂ·
    	        String rest = input.substring(index + pattern.length(), input.length());
    	        buffer.append(substitute(rest, pattern, replacement));
    	    }
@@ -351,11 +349,27 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
       	intent.putExtra("url", url);
       	this.startActivity(intent);
    	}
-   	private void showManual(String url) {
+
+   	/**
+   	 * 
+   	 * @param url
+   	 * @param languageFlag Should be one of 
+   	 * {@link jp.yhonda.ManualActivity.ENGLISH_VERSION} or
+   	 * {@link jp.yhonda.ManualActivity.JAPANESE_VERSION} to indicate
+   	 * which manual language version should be displayed.
+   	 */
+   	private void showManual(String url, int languageFlag) {
       	Intent intent = new Intent(this,ManualActivity.class);
       	intent.setAction(Intent.ACTION_VIEW);
       	intent.putExtra("url", url);
       	intent.putExtra("dir", internalDir);
+      	intent.putExtra(ManualActivity.LANGUAGE_EXTRA, languageFlag);
+      	
+      	// The design seems to be that ManualActivity doesn't know
+      	// the locations of the manual files; so they are passed here
+      	// for lanuage switching within ManualActivity.
+      	intent.putExtra(ManualActivity.ENGLISH_LOCATION_EXTRA, "file://"+internalDir+"/additions/en/maxima.html");
+      	intent.putExtra(ManualActivity.JAPANESE_LOCATION_EXTRA, "file://"+internalDir+"/additions/ja/maxima.html");
       	this.startActivity(intent);
    	}   	
    	private void showGraph() {
@@ -394,10 +408,10 @@ public class MaximaOnAndroidActivity extends Activity implements TextView.OnEdit
 			maximaProccess.maximaCmd("quit();\n");
 			finish();
 		} catch (IOException e) {
-			// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+			// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+			// TODO ÂÂ©Â“Â®ÂÂ¶ÂÂ¬Â‚Â³Â‚ÃªÂ‚Â½ catch ÂƒuÂƒÂÂƒbÂƒN
 			e.printStackTrace();
 		}
    	}

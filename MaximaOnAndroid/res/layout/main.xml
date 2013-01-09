@@ -2,30 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF" android:isScrollContainer="true">
+    android:isScrollContainer="true"
+    android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:isScrollContainer="true" >
-
-            <WebView
-                android:id="@+id/webView1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:isScrollContainer="true" />
-
-    </ScrollView>
+        android:isScrollContainer="true" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="bottom"
         android:inputType="text"
-        android:maxLines="1" android:layout_gravity="bottom" android:isScrollContainer="false" android:keepScreenOn="true" android:selectAllOnFocus="true"/>
+        android:isScrollContainer="false"
+        android:keepScreenOn="true"
+        android:maxLines="1"
+        android:selectAllOnFocus="true" />
 
 </LinearLayout>

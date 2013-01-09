@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/about" android:titleCondensed="About MoA" android:title="About Maxima on Android"></item>
-    <item android:id="@+id/man" android:titleCondensed="Man" android:title="Manual"></item>
-    <item android:id="@+id/manj" android:titleCondensed="Man (J)" android:title="Manual (J)"></item>
-    <item android:id="@+id/graph" android:titleCondensed="Graph" android:title="Graph"></item>
-    <item android:id="@+id/quit" android:titleCondensed="Quit" android:title="Quit"></item>
-    
+
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="About Maxima on Android"
+        android:titleCondensed="About MoA"
+        android:showAsAction="ifRoom|withText">
+    </item>
+    <item
+        android:id="@+id/man"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Maxima Manual"
+        android:titleCondensed="Max Man"
+        android:showAsAction="ifRoom|withText">
+        <menu>
+            <item
+                android:id="@id/manual_en"
+                android:title="English"
+                android:titleCondensed="En">
+            </item>
+            <item
+                android:id="@id/manual_jap"
+                android:title="Japanese"
+                android:titleCondensed="Jap">
+            </item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/graph"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Graph"
+        android:titleCondensed="Graph"
+        android:showAsAction="ifRoom|withText">
+    </item>
+    <item
+        android:id="@+id/quit"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Quit"
+        android:titleCondensed="Quit"
+        android:showAsAction="ifRoom|withText">
+    </item>
 
 </menu>

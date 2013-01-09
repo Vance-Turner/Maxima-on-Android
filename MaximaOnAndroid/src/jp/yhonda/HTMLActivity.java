@@ -27,6 +27,12 @@ import android.webkit.WebViewClient;
 
 
 public class HTMLActivity extends Activity {
+  
+  /*
+   * Determines whether back button events are caught.
+   */
+  protected boolean interceptBackButton = true;
+  
 	public String urlonCreate=null;
     WebView webview=null;
 	
@@ -53,7 +59,7 @@ public class HTMLActivity extends Activity {
 
 	@Override
   public boolean onKeyDown( int keyCode, KeyEvent event ) {
-	  if ( event.getAction() == KeyEvent.ACTION_DOWN
+	  if ( interceptBackButton && event.getAction() == KeyEvent.ACTION_DOWN
 	          && keyCode == KeyEvent.KEYCODE_BACK
 	          && webview.canGoBack() == true ) {
 	      webview.goBack();
